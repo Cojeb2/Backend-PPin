@@ -16,17 +16,17 @@ public class EmployeeList {
     private Long Enb;
 
     @Column(name = "empID")
-    private String EmpID;
-    private String EmpPw;
-    private String Name;
+    private String empID;
+    private String empPw;
+    private String name;
     @Pattern(regexp = "^\\d{6}-\\d{7}$",
             message = "주민등록번호를 똑바로 입력하세요.(XXXXXX-XXXXXXX")
-    private String ResiNum;
-    private String PhoneNum;
+    private String resiNum;
+    private String phoneNum;
     @Email(message = "이메일을 똑바로 입력하세요.")
-    private String Email;
-    private int LoginErrCount;
-    private boolean del_flag;
+    private String email;
+    private int loginErrCount;
+    private boolean del_Flag;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")

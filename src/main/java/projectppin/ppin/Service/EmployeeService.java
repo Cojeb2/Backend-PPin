@@ -28,6 +28,11 @@ public class EmployeeService {
         // 먼저 사원을 저장하여 자동 증가된 ID를 얻음
         EmployeeList savedEmployee = employeeRepository.save(employee);
 
+        // customFourDigits가 null인 경우 예외 처리 (예: 기본값 설정)
+        if (employeeDTO.getCustomFourDigits() == null || employeeDTO.getCustomFourDigits().isEmpty()) {
+            throw new IllegalArgumentException("customFourDigits 값은 필수입니다.");
+        }
+
         // 자동 증가된 ID를 기반으로 사원 ID 생성
         String generatedEmpID = EmployeeIDGenerator.generateEmployeeID(savedEmployee.getEnb(), employeeDTO.getCustomFourDigits());
         savedEmployee.setEmpID(generatedEmpID);  // 생성된 사원 ID를 EmpID에 저장
@@ -46,6 +51,8 @@ public class EmployeeService {
             if (company != null) {
                 savedEmployee.setCompany(company);
             }
+        } else {
+            throw new IllegalArgumentException("회사 정보가 설정되지 않았습니다.");
         }
 
         // 사원을 다시 저장
@@ -65,7 +72,7 @@ public class EmployeeService {
                 employee.getPhoneNum(),
                 employee.getEmail(),
                 employee.getLoginErrCount(),
-                employee.isDel_flag(),
+                employee.isDel_Flag(),
                 (employee.getCompany() != null) ? employee.getCompany().getCnb() : null,  // 회사 ID 반환
                 null  // 4자리 숫자는 반환할 필요가 없음
         );
